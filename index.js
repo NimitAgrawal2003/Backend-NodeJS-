@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')     // created express object
 const app = express()            // created variable using express
-const port = 4000
+const port =4000
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
