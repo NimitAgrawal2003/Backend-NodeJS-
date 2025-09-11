@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0"
+  },
+  "name": "chaibackend",
+  "version": "1.0.0",
+  "description": "a basic app to deploy",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NimitAgrawal2003/Backend-NodeJS-.git"
+  },
+  "keywords": [
+    "node",
+    "chai"
+  ],
+  "author": "nimit agrawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NimitAgrawal2003/Backend-NodeJS-/issues"
+  },
+  "homepage": "https://github.com/NimitAgrawal2003/Backend-NodeJS-#readme"
+}
