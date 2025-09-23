@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DB_NAME } from "../constants.js";
+import { DB_NAME } from "../constants.js";  // https://chatgpt.com/share/68d287d5-5630-8005-8451-9e0697c5bed5
 
 const connectDB = async () => {
     try{
