@@ -27,7 +27,7 @@ const registerUser = asyncHandler( async ( req , res )=> {
             throw new ApiError(400, "All fields are required")
       }
 
-      const existedUser = User.findOne({   // User from user.model.js file in models
+      const existedUser = await User.findOne({   // User from user.model.js file in models
             $or: [{ username },{ email }]        // User will call mongoDB
       })             // it return user that find first
 
