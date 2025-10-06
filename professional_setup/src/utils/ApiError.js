@@ -15,4 +15,4 @@ class ApiError extends Error{   // Error class already present in node js
     }
 }
 
-export {ApiError}
+export { ApiError }
