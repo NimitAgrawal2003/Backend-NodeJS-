@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
+import mongoose from "mongoose";
 const registerUser = asyncHandler( async ( req , res )=> {
       // get user  details from front end   
       // validation - not empty
@@ -16,7 +17,7 @@ const registerUser = asyncHandler( async ( req , res )=> {
 
      const {fullName , email , username , password }  = req.body        // to get these field from frontend
      console.log(" email: " , email);
-
+     
      /*if (fullName === ""){     // we can apply if else and check for each field eg for email, username and password 
       throw new ApiError(400,"fullname is required")
      } */            
@@ -37,12 +38,15 @@ const registerUser = asyncHandler( async ( req , res )=> {
 
       const avatarLocalPath =  req.files?.avatar[0]?.path ;                // ? beacuse it is optinal we may get or not get
       const coverImageLocalPath = req.files?.coverImage[0]?.path;
+      console.log("avatarLocalPath:", avatarLocalPath);
 
       if (!avatarLocalPath) {
             throw new ApiError(400 , "Avatar file is required")
       }
 
      const avatar = await uploadOnCloudinary(avatarLocalPath)
+     console.log("Cloudinary avatar upload result:", avatar);
+
      const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
      if(!avatar){
