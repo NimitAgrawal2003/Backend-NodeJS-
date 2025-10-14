@@ -22,7 +22,7 @@ router.route("/register").post(
 
 router.route("/login").post(loginUser)
 
-//secured routes
-
+//secured routess
 router.route("/logout").post(verifyJWT,logoutUser)  // verifyJWT is middleware here
+
 export default router

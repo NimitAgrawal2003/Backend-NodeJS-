@@ -81,7 +81,7 @@ const generateAccessAndRefreshTokens = async(userId) => {
           const accessToken = user.generateAccessToken()
           const refreshToken = user.generateRefreshToken()
 
-          user.refreshToken = refreshToken
+          user.refreshToken = refreshToken          // adding refresh token in user stored in database
           await user.save({ validateBeforeSave:false })      // kuch check mat kero bus safe kerlo
 
           return {accessToken , refreshToken}
