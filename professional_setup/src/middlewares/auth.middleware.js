@@ -1,11 +1,11 @@
-import { ApiError } from "../utils/ApiError";
-import { asyncHandler } from "../utils/asyncHandler";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 
 export const  verifyJWT = asyncHandler(async(req,res,next)=>{
    try {
-     // res got access of cokies from app.js where we have written app.use(cookieParser())
+     // req got access of cokies from app.js where we have written app.use(cookieParser())
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")  // may or may get beacuse if user is using mobile it will send header
     
     if(!token) {
