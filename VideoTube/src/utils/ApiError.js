@@ -1,4 +1,4 @@
-class ApiError extends Error{   // Error class already present in node js
+class ApiError extends Error{   
     constructor(statusCode,message="Something went wrong",errors = [],stack =""){
         super(message)
         this.statusCode = statusCode
@@ -7,7 +7,7 @@ class ApiError extends Error{   // Error class already present in node js
         this.success = false
         this.errors = errors
 
-        if(stack){                   // can be avoided
+        if(stack){                   
             this.stack = stack
         } else{
             Error.captureStackTrace(this , this.constructor)
