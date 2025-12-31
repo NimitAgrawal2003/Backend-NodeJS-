@@ -6,22 +6,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken"
 const registerUser = asyncHandler( async ( req , res )=> {
-      // get user  details from front end   
-      // validation - not empty
-      // check if user already exists: username , email
-      // check for images , check for avatar
-      // upload them to cloudinary , avatar
-      // create user object - create entry in db
-      // remove password and refresh token field from response
-      // check for user creation
-      // return res
+     
 
-     const {fullName , email , username , password }  = req.body        // to get these field from frontend
+     const {fullName , email , username , password }  = req.body       
      console.log(" email: " , email);
      
-     /*if (fullName === ""){     // we can apply if else and check for each field eg for email, username and password 
-      throw new ApiError(400,"fullname is required")
-     } */            
+               
 
       if (
             [fullName,email,username,password].some((field) => field?.trim() === "")
@@ -29,15 +19,15 @@ const registerUser = asyncHandler( async ( req , res )=> {
             throw new ApiError(400, "All fields are required")
       }
 
-      const existedUser = await User.findOne({   // User from user.model.js file in models
-            $or: [{ username },{ email }]        // User will call mongoDB
-      })             // it return user that find first
+      const existedUser = await User.findOne({   
+            $or: [{ username },{ email }]        
+      })             
 
       if (existedUser){
             throw new ApiError(409,"User with email or username already exists")
       }
 
-      const avatarLocalPath =  req.files?.avatar[0]?.path ;                // ? beacuse it is optinal we may get or not get
+      const avatarLocalPath =  req.files?.avatar[0]?.path ;                
       const coverImageLocalPath = req.files?.coverImage[0]?.path;
       console.log("avatarLocalPath:", avatarLocalPath);
 
@@ -57,15 +47,15 @@ const registerUser = asyncHandler( async ( req , res )=> {
      const user = await User.create({
       fullName,
       avatar: avatar.url,
-      coverImage: coverImage?.url || "",      // to check if there is cover image or not , if leave empty beacuse it is not compulsory
+      coverImage: coverImage?.url || "",      
       email,
       password,
       username: username.toLowerCase()
      })
 
-     const createdUser = await User.findById(user._id).select(   // in this we are finding weather the user created or not
-      "-password -refreshToken"                                  // and if find we dont need password and refreshToken 
-     )                                                           // beacuse we are sending it to the user in later code
+     const createdUser = await User.findById(user._id).select(   
+      "-password -refreshToken"                                 
+     )                                                           
 
      if (!createdUser){
       throw new ApiError(500,"Something went wrong while registering the user")
@@ -82,8 +72,8 @@ const generateAccessAndRefreshTokens = async(userId) => {
           const accessToken = user.generateAccessToken()
           const refreshToken = user.generateRefreshToken()
 
-          user.refreshToken = refreshToken          // adding refresh token in user stored in database
-          await user.save({ validateBeforeSave:false })      // kuch check mat kero bus safe kerlo
+          user.refreshToken = refreshToken          
+          await user.save({ validateBeforeSave:false })      
 
           return {accessToken , refreshToken}
 
@@ -93,12 +83,7 @@ const generateAccessAndRefreshTokens = async(userId) => {
 }
 
 const loginUser = asyncHandler(async( req, res ) => {
-      // bring data from request(req) body
-      // login on the basis of anyone username or email
-      // find the user
-      // password check 
-      // access and refresh token
-      // send cookie
+     
 
       const {email , username , password} = req.body
       console.log(email);
@@ -106,7 +91,7 @@ const loginUser = asyncHandler(async( req, res ) => {
             throw new ApiError(400 , "username or email is required ")
       }
 
-      const user = await User.findOne({         // it return all the information about user
+      const user = await User.findOne({         
             $or: [{ username } , { email }]
       })
 
@@ -174,16 +159,16 @@ const refreshAccessToken = asyncHandler(async(req,res)=>{
       throw new ApiError(401,"unauthorized request")
      }
      
-     try { // try is not necessary here just for safety purpose
+     try { 
       const decodedToken = jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
  
-      const user = await User.findById(decodedToken?._id) // when had generated refresh token we had given it id so know we can access id from decoded token
+      const user = await User.findById(decodedToken?._id) 
  
        if (!user){   // nhi hai user throw error
        throw new ApiError(401,"Invalid refresh token")
       }
  
-      if(incomingRefreshToken !== user?.refreshToken){  // ager match nhi kera to error throw ker do
+      if(incomingRefreshToken !== user?.refreshToken){  
        throw new ApiError(401,"Refresh token is expired or used")
       }
  
@@ -259,7 +244,7 @@ const updateAccountDetails = asyncHandler(async(req,res)=>{
 })
 
 const updateUserAvatar = asyncHandler(async(req,res)=>{
-      const avatarLocalPath = req.file?.path   // may be error here
+      const avatarLocalPath = req.file?.path   
 
       if (!avatarLocalPath){
             throw new ApiError(400,"Avatar file is missing")
