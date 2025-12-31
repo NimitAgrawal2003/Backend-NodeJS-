@@ -6,24 +6,24 @@ import { verifyJWT } from "../middlewares/auth.middleware.js"
 const router = Router()
 
 router.route("/register").post(
-    upload.fields([        // upload from multer middleware 
-        {                       // takes array of objects
+    upload.fields([         
+        {                     
             name: "avatar",
-            maxCount: 1          // file to be accepted
+            maxCount: 1         
         },
         {
             name: "coverImage",
             maxCount: 1
 
         }
-    ]),   // accept array
+    ]),   
     registerUser
-)   //  multer jata hua muj sa mil ka jana
+)   
 
 router.route("/login").post(loginUser)
 
 //secured routess
-router.route("/logout").post(verifyJWT,logoutUser)  // verifyJWT is middleware here
+router.route("/logout").post(verifyJWT,logoutUser)  
 router.route("/refresh-token").post(refreshAccessToken)
 
 export default router
